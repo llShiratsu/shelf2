@@ -1,4 +1,4 @@
-# Shelf
+<img width="960" height="912" alt="image" src="https://github.com/user-attachments/assets/4006fa9a-b11c-4eb6-9aa2-ca55aef391e6" /># Shelf
 
 ## Atividade de segurança
 
@@ -68,17 +68,6 @@ npm run test:security
 
 Detalhes em `docs/atividade-seguranca.md`.
 
-## Como fazer o deploy
-
-1. Subir este projeto para um repositório no GitHub.
-2. Importar o repositório na Vercel.
-3. Criar as variáveis de ambiente na Vercel:
-   - `SUPABASE_URL`
-   - `SUPABASE_SERVICE_ROLE_KEY`
-  - `AUTH_SECRET`
-4. Fazer deploy da branch principal.
-5. Conferir se a URL pública abre o sistema e salva livros no Supabase.
-
 ## Branch principal
 
 A branch principal deve ser protegida no GitHub:
@@ -90,11 +79,10 @@ A branch principal deve ser protegida no GitHub:
 
 ## Validação com cliente real
 
-Para a entrega, uma pessoa que não participou do desenvolvimento deve usar o sistema. A tarefa sugerida é:
-
 1. cadastrar um livro;
 2. alterar o status;
 3. consultar a estante;
 4. excluir ou editar um livro.
 
-Gravar um vídeo curto do uso e anotar uma impressão final da pessoa.
+<img width="960" height="912" alt="image" src="https://github.com/user-attachments/assets/090b3806-6c81-4389-96fa-d7a0ec882d1a" />
+
