@@ -1,5 +1,3 @@
-<img width="960" height="912" alt="image" src="https://github.com/user-attachments/assets/4006fa9a-b11c-4eb6-9aa2-ca55aef391e6" /># Shelf
-
 ## Atividade de segurança
 
 Esta cópia inclui testes executáveis de IDOR/autorização, criptografia/segredos,
