@@ -1,11 +1,4 @@
-## Atividade de segurança
-
-Esta cópia inclui testes executáveis de IDOR/autorização, criptografia/segredos,
-injeção e bots. Use Node.js 22+ e rode `npm run test:security`.
-O [guia da atividade](docs/atividade-seguranca.md) explica os cenários, resultados,
-limites, os dois workflows extras e o roteiro da apresentação presencial.
-As falhas de segurança encontradas na base produzem saída 1; o caso de senhas
-fica como não aplicável porque este MVP não possui login.
+# Shelf
 
 Shelf é um aplicativo web simples para organizar leituras.
 
@@ -34,13 +27,13 @@ A ideia é permitir que uma pessoa cadastre livros e acompanhe o status de cada 
 - Backend/API: Node.js em função serverless da Vercel
 - Banco: Supabase PostgreSQL
 - Versionamento: GitHub
-- Deploy: Vercel
+- Deploy: Vercel, via GitHub Actions
 - Testes: Node.js test runner
 
 ## Como rodar localmente
 
 1. Copie `.env.example` para `.env`.
-2. Preencha `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` e `AUTH_SECRET` (veja o comando para gerar no `.env.example`).
+2. Preencha `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` e `AUTH_SECRET` (o comando para gerar o `AUTH_SECRET` está no `.env.example`).
 3. No Supabase, execute `database/schema.sql` (banco novo) ou `database/migracao-login.sql` (banco que já tinha a tabela `books`).
 4. Rode:
 
@@ -52,19 +45,37 @@ npm start
 
 ## Como rodar os testes
 
+Requisito: Node.js 22 ou superior. Não precisa de `npm install`, `.env` nem Supabase.
+
 ```bash
+npm run check
 npm test
-```
-
-Os testes cobrem validação de dados, repositório em memória e fluxo principal do sistema.
-
-Testes de segurança (IDOR, senhas/criptografia, injeção e bots):
-
-```
 npm run test:security
 ```
 
-Detalhes em `docs/atividade-seguranca.md`.
+- `npm test`: 15 testes funcionais (validação, repositório em memória e fluxo completo por HTTP).
+- `npm run test:security`: 29 testes de segurança, todos passando. Cobrem IDOR, criptografia/senhas, injeção de código e bots.
+
+Para rodar um tema por vez: `npm run test:security:idor`, `:crypto`, `:injection` ou `:bots`.
+
+## Atividade de segurança
+
+Os testes sobem o `server.js` real numa porta local e trocam só o Supabase por um banco em memória. A primeira versão do Shelf não tinha login e falhou em 10 de 18 testes. Depois das correções, todos os 29 passam:
+
+| Tema |
+|---|---|
+| IDOR | Login obrigatório; cada livro tem dono (`user_id`) e toda consulta filtra por id e dono |
+| Senhas | Hash `scrypt` com salt aleatório e comparação em tempo constante |
+| Criptografia | Token de sessão assinado com HMAC; Supabase só por https; erros genéricos para o usuário |
+| Injeção | Parâmetros codificados, lista de campos permitidos, dados no frontend só via `textContent`, JSON inválido retorna 400 |
+| Bots | Limite de 20 escritas/min e 10 logins/min por IP; corpo até 64 KiB; título até 120 caracteres |
+
+Explicação de cada teste, evidências de antes e depois e limitações: [docs/atividade-seguranca.md](docs/atividade-seguranca.md) e pasta `evidencias/`.
+
+## CI/CD (GitHub Actions)
+
+- `.github/workflows/ci.yml` (**Shelf - testes**): em todo Pull Request roda sintaxe, testes funcionais e testes de segurança.
+- `.github/workflows/deploy.yml` (**Shelf - deploy**): a cada push na `main` roda os mesmos testes e, se passarem, publica na Vercel.
 
 ## Branch principal
 
@@ -77,11 +88,16 @@ A branch principal deve ser protegida no GitHub:
 
 ## Validação com cliente real
 
-1. cadastrar um livro;
-2. alterar o status;
-3. consultar a estante;
-4. excluir ou editar um livro.
+Para a entrega, uma pessoa que não participou do desenvolvimento deve usar o sistema. A tarefa sugerida é:
 
-<img width="960" height="912" alt="image" src="https://github.com/user-attachments/assets/090b3806-6c81-4389-96fa-d7a0ec882d1a" />
+1. criar uma conta;
+2. cadastrar um livro;
+3. alterar o status;
+4. consultar a estante;
+5. excluir ou editar um livro.
 
-<img width="1251" height="886" alt="image" src="https://github.com/user-attachments/assets/108b7d71-50a5-4781-8652-58abd6a12845" />
+## Evidências
+
+<img width="960" height="912" alt="Execuções no GitHub Actions" src="https://github.com/user-attachments/assets/090b3806-6c81-4389-96fa-d7a0ec882d1a" />
+
+<img width="1251" height="886" alt="Evidência" src="https://github.com/user-attachments/assets/108b7d71-50a5-4781-8652-58abd6a12845" />
