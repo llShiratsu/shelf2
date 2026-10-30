@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shelf</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div>
+        <h1>Shelf</h1>
+        <p>Estante pessoal de leituras</p>
+      </div>
+      <div class="session" id="session" hidden>
+        <span id="session-email"></span>
+        <button type="button" class="secondary" id="logout-button">Sair</button>
+      </div>
+    </header>
+
+    <main class="auth-layout" id="auth-view" hidden>
+      <section class="panel auth-panel" aria-labelledby="auth-title">
+        <h2 id="auth-title">Entrar</h2>
+        <form id="auth-form">
+          <label for="auth-email">E-mail</label>
+          <input id="auth-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+
+          <label for="auth-password">Senha</label>
+          <input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" required>
+
+          <p id="auth-message" class="message" role="status"></p>
+
+          <div class="actions">
+            <button type="submit" id="auth-submit">Entrar</button>
+            <button type="button" class="secondary" id="auth-switch">Criar conta</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <main class="layout" id="app-view" hidden>
+      <section class="panel form-panel" aria-labelledby="form-title">
+        <h2 id="form-title">Livro</h2>
+        <form id="book-form">
+          <input type="hidden" id="book-id">
+
+          <label for="title">Título</label>
+          <input id="title" name="title" type="text" maxlength="120" required>
+
+          <label for="author">Autor</label>
+          <input id="author" name="author" type="text" maxlength="100" required>
+
+          <label for="status">Status</label>
+          <select id="status" name="status" required>
+            <option value="quero_ler">Quero ler</option>
+            <option value="lendo">Lendo</option>
+            <option value="lido">Lido</option>
+          </select>
+
+          <label for="genre">Gênero</label>
+          <input id="genre" name="genre" type="text" maxlength="60">
+
+          <div class="row">
+            <div>
+              <label for="start_date">Início</label>
+              <input id="start_date" name="start_date" type="date">
+            </div>
+            <div>
+              <label for="end_date">Fim</label>
+              <input id="end_date" name="end_date" type="date">
+            </div>
+          </div>
+
+          <label for="rating">Nota</label>
+          <input id="rating" name="rating" type="number" min="1" max="5">
+
+          <p id="form-message" class="message" role="status"></p>
+
+          <div class="actions">
+            <button type="submit">Salvar</button>
+            <button type="button" class="secondary" id="cancel-button">Cancelar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel list-panel" aria-labelledby="list-title">
+        <div class="list-header">
+          <h2 id="list-title">Estante</h2>
+          <div class="filters" aria-label="Filtrar livros">
+            <button type="button" class="filter active" data-status="">Todos</button>
+            <button type="button" class="filter" data-status="quero_ler">Quero ler</button>
+            <button type="button" class="filter" data-status="lendo">Lendo</button>
+            <button type="button" class="filter" data-status="lido">Lido</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Livro</th>
+                <th>Status</th>
+                <th>Nota</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="books-body"></tbody>
+          </table>
+        </div>
+
+        <p id="empty-state" class="empty" hidden>Nenhum livro cadastrado.</p>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

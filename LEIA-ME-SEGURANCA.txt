@@ -1,0 +1,12 @@
+SHELF — ATIVIDADE DE SEGURANÇA
+
+Com Node.js 22+, na pasta do projeto:
+
+  npm run check
+  npm test
+  npm run test:security
+
+Resultado esperado: 15 testes funcionais e 29 testes de segurança passando.
+Não precisa instalar dependências nem configurar Supabase para rodar os testes.
+
+Explicação completa, antes/depois e roteiro: docs/atividade-seguranca.md

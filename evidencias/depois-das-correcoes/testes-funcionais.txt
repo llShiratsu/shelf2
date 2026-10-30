@@ -1,0 +1,104 @@
+
+> shelf@1.0.0 test
+> node --test test/*.test.js
+
+TAP version 13
+# Subtest: POST com livro valido cria no Supabase
+ok 1 - POST com livro valido cria no Supabase
+  ---
+  duration_ms: 19.380287
+  type: 'test'
+  ...
+# Subtest: POST sem titulo devolve 400 sem chamar o Supabase
+ok 2 - POST sem titulo devolve 400 sem chamar o Supabase
+  ---
+  duration_ms: 5.521214
+  type: 'test'
+  ...
+# Subtest: aceita livro com dados obrigatórios
+ok 3 - aceita livro com dados obrigatórios
+  ---
+  duration_ms: 1.049763
+  type: 'test'
+  ...
+# Subtest: bloqueia cadastro sem título
+ok 4 - bloqueia cadastro sem título
+  ---
+  duration_ms: 0.29314
+  type: 'test'
+  ...
+# Subtest: bloqueia status inválido
+ok 5 - bloqueia status inválido
+  ---
+  duration_ms: 0.1994
+  type: 'test'
+  ...
+# Subtest: bloqueia nota fora de 1 a 5
+ok 6 - bloqueia nota fora de 1 a 5
+  ---
+  duration_ms: 0.138181
+  type: 'test'
+  ...
+# Subtest: bloqueia data final anterior à inicial
+ok 7 - bloqueia data final anterior à inicial
+  ---
+  duration_ms: 0.195093
+  type: 'test'
+  ...
+# Subtest: formata status para exibição
+ok 8 - formata status para exibição
+  ---
+  duration_ms: 0.155539
+  type: 'test'
+  ...
+# Subtest: fluxo principal do usuário
+ok 9 - fluxo principal do usuário
+  ---
+  duration_ms: 1.391584
+  type: 'test'
+  ...
+# Subtest: cria e lista livros
+ok 10 - cria e lista livros
+  ---
+  duration_ms: 1.344719
+  type: 'test'
+  ...
+# Subtest: filtra livros por status
+ok 11 - filtra livros por status
+  ---
+  duration_ms: 0.226453
+  type: 'test'
+  ...
+# Subtest: edita livro existente
+ok 12 - edita livro existente
+  ---
+  duration_ms: 0.239781
+  type: 'test'
+  ...
+# Subtest: exclui livro
+ok 13 - exclui livro
+  ---
+  duration_ms: 0.137182
+  type: 'test'
+  ...
+# Subtest: fluxo completo do usuario por HTTP
+ok 14 - fluxo completo do usuario por HTTP
+  ---
+  duration_ms: 24.22138
+  type: 'test'
+  ...
+# Subtest: GET / devolve o HTML da pagina inicial
+ok 15 - GET / devolve o HTML da pagina inicial
+  ---
+  duration_ms: 4.778683
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 296.687445

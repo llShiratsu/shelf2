@@ -1,0 +1,69 @@
+[FALHOU] [BOTS-01] rajada de 30 cadastros deve acionar limite e Retry-After
+  Nenhuma política de 20 escritas/minuto impediu a rajada de cadastros.
+  EVIDÊNCIA: 30 requisições sequenciais em 88 ms; HTTP: {"201":30}; registros: 30.
+[FALHOU] [BOTS-02] API deve respeitar o limite de 120 caracteres do título da interface
+  maxlength do HTML pode ser contornado com chamada direta à API.
+
+201 !== 400
+
+  EVIDÊNCIA: Título com 121 caracteres: HTTP 201; chamadas ao banco: 1.
+[FALHOU] [BOTS-03] corpo acima do orçamento de 64 KiB deve receber 413
+  API não limita o tamanho do corpo antes de processá-lo (orçamento proposto: 64 KiB).
+
+201 !== 413
+
+  EVIDÊNCIA: JSON enviado: 71759 bytes; HTTP 201; chamadas ao banco: 1.
+[PASSOU] [CRIPTO-01] chave de serviço não aparece nos arquivos públicos nem na resposta normal
+  EVIDÊNCIA: Chave fictícia usada pelo backend e ausente nas quatro respostas públicas verificadas.
+[PASSOU] [CRIPTO-02] arquivo .env não deve ser servido por HTTP
+  EVIDÊNCIA: Quatro caminhos de configuração/traversal retornaram 403 ou 404. Limite: não é uma varredura exaustiva.
+[FALHOU] [CRIPTO-03] configuração HTTP do Supabase deve ser recusada antes de enviar a chave
+  Backend não valida HTTPS e encaminharia a chave por HTTP em uma configuração incorreta.
+
+1 !== 0
+
+  EVIDÊNCIA: SUPABASE_URL com http: HTTP 200; tentativas de envio da chave sem TLS: 1. Transporte externo foi interceptado, sem rede real.
+[FALHOU] [CRIPTO-04] erro do serviço externo não deve revelar um segredo ao cliente
+  Corpo de erro externo é repassado integralmente ao usuário. O cenário de vazamento é simulado.
+  EVIDÊNCIA: Falha externa simulada: HTTP 500; marcador secreto refletido: true.
+[NAO_APLICAVEL] [SENHAS-01] hash, salt e validação de senha
+  Não aplicável ao MVP: não há login, senha ou tabela de usuários. Não foi criada uma implementação fictícia para obter aprovação.
+[FALHOU] [IDOR-01] visitante sem autenticação não deve listar a estante pessoal
+  Esperado 401/403; recebido 200. IDs e dados da estante ficaram acessíveis.
+  EVIDÊNCIA: GET anônimo: HTTP 200; livros retornados: 2.
+[FALHOU] [IDOR-02] trocar o ID da URL não deve permitir edição anônima
+  A API aceitou editar um livro pelo ID sem autenticação/autorização.
+  EVIDÊNCIA: ID B enviado diretamente; HTTP 200; livro B alterado: true; livro A preservado: true.
+[FALHOU] [IDOR-03] trocar o ID da URL não deve permitir exclusão anônima
+  A API aceitou excluir um livro pelo ID sem autenticação/autorização.
+  EVIDÊNCIA: DELETE anônimo: HTTP 200; livro B excluído: true; livro A presente: true.
+[FALHOU] [IDOR-04] token inválido não deve conceder permissão de escrita
+  O cabeçalho de autenticação é ignorado e a alteração foi aceita.
+  EVIDÊNCIA: Bearer inválido: HTTP 200; alteração persistida no adaptador: true.
+[PASSOU] [INJECAO-01] texto semelhante a SQL permanece como dado no JSON enviado ao Supabase
+  EVIDÊNCIA: Payload preservado no corpo JSON e ausente da URL. Escopo: construção da requisição; não executa SQL no PostgreSQL real.
+[PASSOU] [INJECAO-02] ID com separadores não pode acrescentar filtros ao PostgREST
+  EVIDÊNCIA: Separadores escapados: um único parâmetro id; ambos os registros fictícios preservados.
+[PASSOU] [INJECAO-03] filtro de status manipulado deve ser recusado antes do banco
+  EVIDÊNCIA: Status fora da lista permitida retornou 400, sem acesso ao adaptador de banco.
+[PASSOU] [INJECAO-04] campos extras e __proto__ não podem ser atribuídos ao registro
+  EVIDÊNCIA: Somente campos permitidos chegaram ao banco. Não foi atribuída propriedade/role enviada pelo cliente.
+[PASSOU] [INJECAO-05] renderização do frontend mantém payloads XSS em textContent
+  EVIDÊNCIA: Três payloads percorreram o renderizador real: dados em textContent; innerHTML recebeu apenas template estático. Ensaio de componente, sem navegador real.
+[FALHOU] [INJECAO-06] JSON malformado deve retornar 400 sem detalhes internos
+  Erro de entrada do cliente foi tratado como erro interno 500.
+
+500 !== 400
+
+  EVIDÊNCIA: JSON truncado: HTTP 500; corpo: {"error":"Unexpected end of JSON input"}.
+  EVIDÊNCIA: tests 18
+  EVIDÊNCIA: suites 0
+  EVIDÊNCIA: pass 7
+  EVIDÊNCIA: fail 10
+  EVIDÊNCIA: cancelled 0
+  EVIDÊNCIA: skipped 1
+  EVIDÊNCIA: todo 0
+  EVIDÊNCIA: duration_ms 2990.5048
+
+RESUMO: {"total":18,"passed":7,"failed":10,"notApplicable":1}
+Relatórios: reports/security-results.json e reports/security-results.md

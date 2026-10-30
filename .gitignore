@@ -1,0 +1,6 @@
+.env
+.vercel
+node_modules
+coverage
+npm-debug.log*
+reports

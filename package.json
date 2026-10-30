@@ -1,0 +1,19 @@
+{
+  "name": "shelf",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Organizador pessoal de leituras para o projeto integrador de DevOps.",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js",
+    "test:security": "node scripts/run-security.cjs",
+    "test:security:idor": "node scripts/run-security.cjs idor",
+    "test:security:crypto": "node scripts/run-security.cjs crypto",
+    "test:security:injection": "node scripts/run-security.cjs injection",
+    "test:security:bots": "node scripts/run-security.cjs bots",
+    "check": "node --check server.js && node --check api/books.js && node --check api/auth.js && node --check src/password.js && node --check src/token.js && node --check src/http.js && node --check public/app.js && node --check src/book-validation.js && node --check src/memory-repository.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

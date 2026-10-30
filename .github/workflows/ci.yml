@@ -1,0 +1,44 @@
+name: Shelf - testes
+
+on:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verificar sintaxe
+        run: npm run check
+
+      - name: Testes funcionais
+        run: npm test
+
+      - name: Testes de segurança (IDOR, senhas/cripto, injeção, bots)
+        run: npm run test:security
+
+      - name: Resumo no GitHub
+        if: always()
+        run: |
+          if [ -f reports/security-results.md ]; then
+            cat reports/security-results.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Guardar relatórios
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-seguranca
+          path: reports/
+          if-no-files-found: ignore
