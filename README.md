@@ -86,3 +86,4 @@ A branch principal deve ser protegida no GitHub:
 
 <img width="960" height="912" alt="image" src="https://github.com/user-attachments/assets/090b3806-6c81-4389-96fa-d7a0ec882d1a" />
 
+<img width="1251" height="886" alt="image" src="https://github.com/user-attachments/assets/108b7d71-50a5-4781-8652-58abd6a12845" />
